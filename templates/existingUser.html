@@ -1,0 +1,86 @@
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title> register </title>
+		<link rel="stylesheet" href="../static/style.css"> 
+	</head>
+	<body>
+		<div class="registercontent" align="center">
+			<div class="registertop">
+				<h1>Register</h1>
+			</div></br></br>
+			<div class="registerbottom">
+			<form autocomplete="off">
+                <div class="msg">{{ msg }}</div>
+                <input type="text" name="username" placeholder="Enter Your Username" class="textbox" id="username" required></br></br>
+                <input type="button" class="btn" onclick="deleteFunc()" value="Delete User" >
+                <input type="button" class="btn" onclick="disable()"  value="Disable User">
+			</form>
+			</div>
+            <br></br>
+            <div class="contentbar">
+                <table border="1">
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>Password</th>
+                            <th>Email</th>
+                            <th>Userid</th>
+                            <th>Process</th>
+                            <th>Account Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for dat in data %}
+                        <tr>
+                            <td>{{dat.username}}</td>
+                            <td>{{dat.password}}</td>
+                            <td>{{dat.email}}</td>
+                            <td>{{dat.userid}}</td>
+                            <td>{{dat.process}}</td>
+                            <td>{{dat.accountname}}</td>
+                        </tr> 
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+    
+		</div>
+       
+      
+    </body>
+    <script>
+        function deleteFunc(){
+            
+           var username = document.querySelector('input[name="username"]').value;
+           console.log(username)
+           var xhr = new XMLHttpRequest();
+                xhr.open('POST', 'http://127.0.0.1:5000/delete', true);
+                xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                var response = JSON.parse(xhr.responseText);
+
+            }
+            };
+            xhr.send(JSON.stringify(username));
+        }
+
+
+        function disable(){
+            var username = document.querySelector('input[name="username"]').value;
+            console.log(username)
+            
+            var xhr = new XMLHttpRequest();
+                xhr.open('POST', 'http://127.0.0.1:5000/disable', true);
+                xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                var response = JSON.parse(xhr.responseText);
+
+            }
+            };
+            xhr.send(JSON.stringify(username));
+        }
+
+        
+    </script>
+</html>
